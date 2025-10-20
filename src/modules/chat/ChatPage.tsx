@@ -3,6 +3,7 @@
 import { useChat } from '@ai-sdk/react';
 import { useState } from 'react';
 import { Weather } from '@/modules/weather';
+import { AnyApplication } from '@/modules/any-application';
 
 export default function Page() {
   const [input, setInput] = useState('');
@@ -36,6 +37,27 @@ export default function Page() {
                     return (
                       <div key={index}>
                         <Weather {...output} />
+                      </div>
+                    );
+                  case 'output-error':
+                    return <div key={index}>Error: {part.errorText}</div>;
+                  default:
+                    return null;
+                }
+              }
+
+              if (part.type === 'tool-createApplication') {
+                switch (part.state) {
+                  case 'input-available':
+                    return <div key={index}>Creating application...</div>;
+                  case 'output-available':
+                    const appOutput = part.output;
+                    if(!appOutput) return null;
+                    if(typeof appOutput !== 'object') return null;
+                    if(!('html' in appOutput)) return null;
+                    return (
+                      <div key={index}>
+                        <AnyApplication html={appOutput.html as string} />
                       </div>
                     );
                   case 'output-error':

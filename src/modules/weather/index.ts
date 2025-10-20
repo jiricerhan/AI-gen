@@ -1,2 +1,2 @@
 export { Weather } from './Weather';
-export { weatherTool, tools } from './tool';
+export { weatherTool } from './tool';
