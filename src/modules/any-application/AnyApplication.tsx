@@ -4,9 +4,10 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 type AnyApplicationProps = {
   html: string;
+  originalPrompt: string;
 };
 
-export const AnyApplication = ({ html }: AnyApplicationProps) => {
+export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [htmxLoaded, setHtmxLoaded] = useState(false);
 
@@ -27,13 +28,6 @@ export const AnyApplication = ({ html }: AnyApplicationProps) => {
       };
       document.head.appendChild(htmxScript);
     }
-
-    // Load Tailwind CSS if not already loaded
-    if (typeof window !== 'undefined' && !document.querySelector('script[src*="tailwindcss"]')) {
-      const tailwindScript = document.createElement('script');
-      tailwindScript.src = 'https://cdn.tailwindcss.com';
-      document.head.appendChild(tailwindScript);
-    }
   }, []);
 
   // Set innerHTML directly and process htmx
@@ -49,18 +43,19 @@ export const AnyApplication = ({ html }: AnyApplicationProps) => {
 
       const htmx = (window as any).htmx;
 
-      // Add event listener to inject current markup into every HTMX request
+      // Add event listener to inject current markup and original prompt into every HTMX request
       const configRequestHandler = (evt: any) => {
         // Only intercept requests to our API endpoint
         if (evt.detail.path === '/api/any-application/interact') {
-          console.log('AnyApplication: Injecting current markup into request');
+          console.log('AnyApplication: Injecting current markup and original prompt into request');
           console.log('Existing parameters:', Object.keys(evt.detail.parameters));
 
           // Get the current HTML from the container
           const currentMarkup = container.innerHTML;
 
-          // Add it to the request parameters (not replacing them)
+          // Add both to the request parameters (not replacing them)
           evt.detail.parameters['currentMarkup'] = currentMarkup;
+          evt.detail.parameters['originalPrompt'] = originalPrompt;
 
           console.log('Parameters after injection:', Object.keys(evt.detail.parameters));
         }

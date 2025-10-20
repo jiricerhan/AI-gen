@@ -43,7 +43,7 @@ Example with form inputs:
   <div id="result" class="mt-4"></div>
 </div>
 
-Note: The current HTML state is automatically captured and sent with each request, so you don't need to manage it manually.`;
+Note: The current HTML state and original prompt are automatically captured and sent with each request.`;
 
   const response = await openAIClient.createChatCompletion([
     {
@@ -63,13 +63,16 @@ Note: The current HTML state is automatically captured and sent with each reques
 }
 
 export async function processInteraction(formData: Record<string, any>): Promise<string> {
-  // Extract current markup if available
+  // Extract current markup and original prompt
   const currentMarkup = formData.currentMarkup || 'Not provided';
+  const originalPrompt = formData.originalPrompt || 'Not provided';
 
-  // Remove currentMarkup from formData for cleaner display
-  const { currentMarkup: _, ...interactionData } = formData;
+  // Remove currentMarkup and originalPrompt from formData for cleaner display
+  const { currentMarkup: _markup, originalPrompt: _prompt, ...interactionData } = formData;
 
   const interactionPrompt = `A user interacted with an HTML application.
+
+ORIGINAL APPLICATION PROMPT: "${originalPrompt}"
 
 CURRENT HTML STATE (automatically captured - DO NOT swap this):
 ${currentMarkup}
@@ -78,6 +81,7 @@ USER INTERACTION DATA:
 ${JSON.stringify(interactionData, null, 2)}
 
 Based on this interaction, generate ONLY the HTML elements that need to be updated using HTMX out-of-band swaps.
+Remember that this application was created to: "${originalPrompt}"
 
 Requirements:
 - Return ONLY the changed UI elements with hx-swap-oob="true"

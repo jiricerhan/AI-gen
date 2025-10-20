@@ -10,10 +10,10 @@ export const anyApplicationTool = createTool({
   execute: async function ({ prompt }) {
     try {
       const html = await generateApplication(prompt);
-      return { html };
+      return { html, originalPrompt: prompt };
     } catch (error) {
       console.error('Error generating application:', error);
-      return { html: '<p class="text-red-500">Error creating application</p>' };
+      return { html: '<p class="text-red-500">Error creating application</p>', originalPrompt: prompt };
     }
   },
 });
