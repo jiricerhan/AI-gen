@@ -4,7 +4,11 @@ export async function generateApplication(prompt: string): Promise<string> {
   const enhancedPrompt = `Create an interactive HTML application for the following request: "${prompt}"
 
 Requirements:
-- Return ONLY the HTML markup, no markdown code blocks or explanations
+- Return ONLY complete, functional HTML markup - no markdown, no explanations, no comments
+- DO NOT include HTML comments (<!-- -->)
+- DO NOT use placeholders like "<!-- Additional elements -->" or "<!-- ... -->"
+- GENERATE ALL ELEMENTS COMPLETELY - if you need 100 cells, output all 100, not just examples
+- DO NOT include any <script> tags or inline JavaScript - all interactivity must use HTMX attributes only
 - IMPORTANT: ALL interactive buttons MUST use EXACTLY this URL: hx-post="/api/any-application/interact"
 - Structure your HTML with MEANINGFUL IDs for different sections that can be updated independently
   * Each logical section should have a unique ID (e.g., id="counter-display", id="user-list")
@@ -16,11 +20,18 @@ Requirements:
   * Only use hx-include="#app-form" if you have actual form inputs that need to be sent
 - Add form inputs (text, number, etc.) when you need user input data
 - Use hx-vals='{"action":"actionName"}' to identify which button was clicked
+- IMPORTANT: Store application state and metadata in hidden input fields
+  * Use <input type="hidden" name="stateData" value="..."> to persist state between interactions
+  * Store any data you need to track (scores, positions, game state, etc.) in hidden fields
+  * Example: <input type="hidden" name="score" value="0"> or <input type="hidden" name="gameState" value='{"x":5,"y":3}'>
+  * These hidden fields will be sent with every interaction so you can maintain state
 - Use Tailwind CSS classes for styling (assume Tailwind is available)
-- Make it functional and interactive
+- Make it functional and interactive using ONLY HTML and HTMX attributes - NO JavaScript
+- Output COMPLETE, WORKING HTML with all elements fully rendered
 
 Example structure:
 <div id="app-container" class="p-4">
+  <input type="hidden" name="count" value="0" />
   <div id="counter-display" class="text-2xl mb-4">Count: 0</div>
   <div id="controls" class="space-x-2">
     <button type="button" hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"increment"}' class="bg-blue-500 text-white px-4 py-2">
@@ -48,7 +59,7 @@ Note: The current HTML state and original prompt are automatically captured and 
   const response = await openAIClient.createChatCompletion([
     {
       role: "system",
-      content: "You are an expert at creating interactive HTML applications with htmx. Return only HTML markup, no explanations or markdown. Always use proper htmx attributes.",
+      content: "You are an expert at creating interactive HTML applications with htmx. Return ONLY complete, functional HTML markup with NO comments, NO placeholders, NO examples - generate ALL elements fully. No explanations or markdown. Always use proper htmx attributes.",
     },
     {
       role: "user",
@@ -86,19 +97,27 @@ Remember that this application was created to: "${originalPrompt}"
 Requirements:
 - Return ONLY the changed UI elements with hx-swap-oob="true"
 - DO NOT return the full page markup, only the parts that visually changed
+- DO NOT include any <script> tags or inline JavaScript - use only HTML and HTMX attributes
 - DO NOT try to update or swap "currentMarkup" - it's managed automatically by the system
 - Each element MUST have hx-swap-oob="true" and an id matching the element to update
 - Use the same IDs as in the current markup
 - Maintain htmx interaction patterns (hx-post="/api/any-application/interact")
 - Use Tailwind CSS classes for styling
+- IMPORTANT: Update hidden state fields if the state changed
+  * If you have hidden fields tracking state (scores, positions, etc.), include updated versions in your response
+  * Use hx-swap-oob="true" with matching name attribute to swap hidden inputs
+  * Example: <input type="hidden" name="count" value="5" hx-swap-oob="true" />
 
 Example response (return ONLY updated UI elements):
 <div id="counter-display" hx-swap-oob="true" class="text-2xl mb-4">Count: 5</div>
+<input type="hidden" name="count" value="5" hx-swap-oob="[name='count']" />
 
 IMPORTANT:
 - Return ONLY the UI elements that changed, nothing else
+- Include updated hidden state fields if state changed
 - DO NOT include currentMarkup in your response
-- Each element needs hx-swap-oob="true" and the correct id`;
+- DO NOT include any <script> tags or JavaScript
+- Each element needs hx-swap-oob="true" and the correct id or selector`;
 
   const response = await openAIClient.createChatCompletion([
     {
