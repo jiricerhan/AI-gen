@@ -1,1 +1,73 @@
 @import "tailwindcss";
+
+/* Safelist common utilities for dynamic content */
+
+/* Spacing - padding and margin */
+@source inline("p-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("px-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("py-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("pt-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("pb-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("pl-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("pr-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("m-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("mx-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("my-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("mt-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("mb-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("ml-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("mr-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("gap-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+
+/* Colors - backgrounds, text, borders */
+@source inline("bg-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+@source inline("text-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+@source inline("border-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+@source inline("bg-{white,black,transparent}");
+@source inline("text-{white,black}");
+
+/* Typography */
+@source inline("text-{xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl}");
+@source inline("font-{thin,extralight,light,normal,medium,semibold,bold,extrabold,black}");
+@source inline("{text,underline}-{left,center,right,justify}");
+@source inline("{italic,not-italic,uppercase,lowercase,capitalize,normal-case}");
+
+/* Layout */
+@source inline("{flex,inline-flex,grid,inline-grid,block,inline-block,inline,hidden}");
+@source inline("flex-{row,row-reverse,col,col-reverse}");
+@source inline("{flex-wrap,flex-nowrap}");
+@source inline("justify-{start,end,center,between,around,evenly}");
+@source inline("items-{start,end,center,baseline,stretch}");
+@source inline("grid-cols-{1,2,3,4,5,6,12}");
+
+/* Sizing */
+@source inline("w-{0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64,full,auto,screen}");
+@source inline("h-{0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64,full,auto,screen}");
+@source inline("min-w-{0,full}");
+@source inline("min-h-{0,full,screen}");
+@source inline("max-w-{xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,full,none}");
+
+/* Borders */
+@source inline("border{,-0,-2,-4,-8}");
+@source inline("border-{t,b,l,r}{,-0,-2,-4,-8}");
+@source inline("rounded{,-none,-sm,-md,-lg,-xl,-2xl,-3xl,-full}");
+@source inline("rounded-{t,b,l,r,tl,tr,bl,br}{,-none,-sm,-md,-lg,-xl,-2xl,-3xl,-full}");
+
+/* Effects */
+@source inline("shadow{,-sm,-md,-lg,-xl,-2xl,-none}");
+@source inline("opacity-{0,5,10,20,25,30,40,50,60,70,75,80,90,95,100}");
+
+/* Positioning */
+@source inline("{static,fixed,absolute,relative,sticky}");
+@source inline("{top,bottom,left,right}-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("z-{0,10,20,30,40,50}");
+
+/* Common interactive states */
+@source inline("{hover:,focus:,active:}bg-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+@source inline("{hover:,focus:}text-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+@source inline("cursor-{pointer,default,not-allowed}");
+
+/* Transitions */
+@source inline("transition{,-all,-colors,-opacity,-transform}");
+@source inline("duration-{75,100,150,200,300,500,700,1000}");
+@source inline("ease-{linear,in,out,in-out}");
