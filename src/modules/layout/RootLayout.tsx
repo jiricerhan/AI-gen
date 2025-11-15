@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '../../app/globals.css';
 
 export const metadata: Metadata = {
   title: 'GenUI',
@@ -13,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <script src="https://cdn.tailwindcss.com" async></script>
         {children}
       </body>
     </html>
