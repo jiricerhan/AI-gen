@@ -15,7 +15,8 @@ Requirements:
   * Each logical section should have a unique ID (e.g., id="counter-display", id="user-list")
   * This allows for partial updates using HTMX out-of-band swaps
 - Use htmx attributes for ALL interactive elements:
-  * Use <button hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"increment"}'> for buttons
+  * Use <button hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"increment"}' hx-indicator="#app-loading-indicator"> for buttons
+  * IMPORTANT: ALL interactive buttons MUST include hx-indicator="#app-loading-indicator" to show loading state
   * Use hx-vals to send specific data about which action was triggered
   * Use hx-swap="none" since we'll use out-of-band swaps for updates
   * Only use hx-include="#app-form" if you have actual form inputs that need to be sent
@@ -35,10 +36,10 @@ Example structure:
   <input type="hidden" name="count" value="0" />
   <div id="counter-display" class="text-2xl mb-4">Count: 0</div>
   <div id="controls" class="space-x-2">
-    <button type="button" hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"increment"}' class="bg-blue-500 text-white px-4 py-2">
+    <button type="button" hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"increment"}' hx-indicator="#app-loading-indicator" class="bg-blue-500 text-white px-4 py-2">
       Increment
     </button>
-    <button type="button" hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"decrement"}' class="bg-red-500 text-white px-4 py-2">
+    <button type="button" hx-post="/api/any-application/interact" hx-swap="none" hx-vals='{"action":"decrement"}' hx-indicator="#app-loading-indicator" class="bg-red-500 text-white px-4 py-2">
       Decrement
     </button>
   </div>
@@ -48,7 +49,7 @@ Example with form inputs:
 <div id="app-container" class="p-4">
   <form id="app-form">
     <input type="text" name="username" class="border p-2" placeholder="Enter name" />
-    <button type="button" hx-post="/api/any-application/interact" hx-include="#app-form" hx-swap="none" hx-vals='{"action":"submit"}' class="bg-blue-500 text-white px-4 py-2">
+    <button type="button" hx-post="/api/any-application/interact" hx-include="#app-form" hx-swap="none" hx-vals='{"action":"submit"}' hx-indicator="#app-loading-indicator" class="bg-blue-500 text-white px-4 py-2">
       Submit
     </button>
   </form>
@@ -103,6 +104,7 @@ Requirements:
 - Each element MUST have hx-swap-oob="true" and an id matching the element to update
 - Use the same IDs as in the current markup
 - Maintain htmx interaction patterns (hx-post="/api/any-application/interact")
+- IMPORTANT: ALL interactive buttons MUST include hx-indicator="#app-loading-indicator" to show loading state
 - Use Tailwind CSS classes for styling
 - IMPORTANT: Update hidden state fields if the state changed
   * If you have hidden fields tracking state (scores, positions, etc.), include updated versions in your response

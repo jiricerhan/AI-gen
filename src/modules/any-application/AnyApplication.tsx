@@ -86,9 +86,15 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
   }, [html, htmxLoaded]);
 
   return (
-    <div hx-include="this">
+    <div hx-include="this" className="relative">
       <div ref={containerRef} />
       <div id="app-error-message" className="text-red-500 p-2"></div>
+      <div id="app-loading-indicator" className="htmx-indicator absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="text-gray-700 font-medium">Loading...</div>
+        </div>
+      </div>
     </div>
   );
 };
