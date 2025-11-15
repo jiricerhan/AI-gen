@@ -1,14 +1,13 @@
 import { processInteraction } from '@/modules/any-application/api';
-import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
     // Convert FormData to plain object
-    const data: Record<string, any> = {};
+    const data: Record<string, string> = {};
     formData.forEach((value, key) => {
-      data[key] = value;
+      data[key] = value.toString();
     });
 
     const html = await processInteraction(data);

@@ -2,7 +2,6 @@
 
 import { useChat } from '@ai-sdk/react';
 import { useState } from 'react';
-import { Weather } from '@/modules/weather';
 import { AnyApplication } from '@/modules/any-application';
 
 export default function Page() {
@@ -26,26 +25,6 @@ export default function Page() {
                 {message.parts.map((part, index) => {
                   if (part.type === 'text') {
                     return <span key={index}>{part.text}</span>;
-                  }
-
-                  if (part.type === 'tool-displayWeather') {
-                    switch (part.state) {
-                      case 'input-available':
-                        return <div key={index} className="italic">Loading weather...</div>;
-                      case 'output-available':
-                        const output = part.output;
-                        if(!output) return null;
-                        if(typeof output !== 'object') return null;
-                        return (
-                          <div key={index} className="mt-2">
-                            <Weather {...output} />
-                          </div>
-                        );
-                      case 'output-error':
-                        return <div key={index} className="text-red-500">Error: {part.errorText}</div>;
-                      default:
-                        return null;
-                    }
                   }
 
                   if (part.type === 'tool-createApplication') {

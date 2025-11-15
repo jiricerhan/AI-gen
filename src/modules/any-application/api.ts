@@ -75,12 +75,14 @@ Note: The current HTML state and original prompt are automatically captured and 
   return html.replace(/```html\n?/g, '').replace(/```\n?/g, '').trim();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function processInteraction(formData: Record<string, any>): Promise<string> {
   // Extract current markup and original prompt
   const currentMarkup = formData.currentMarkup || 'Not provided';
   const originalPrompt = formData.originalPrompt || 'Not provided';
 
   // Remove currentMarkup and originalPrompt from formData for cleaner display
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { currentMarkup: _markup, originalPrompt: _prompt, ...interactionData } = formData;
 
   const interactionPrompt = `A user interacted with an HTML application.

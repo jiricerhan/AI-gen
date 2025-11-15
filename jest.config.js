@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { createDefaultPreset } = require("ts-jest");
 require("dotenv").config();
 

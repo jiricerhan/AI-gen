@@ -14,12 +14,14 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
   // Load scripts once on mount
   useLayoutEffect(() => {
     // Check if htmx is already loaded
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== 'undefined' && (window as any).htmx) {
       setHtmxLoaded(true);
       return;
     }
 
     // Load htmx if not already loaded
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== 'undefined' && !(window as any).htmx) {
       const htmxScript = document.createElement('script');
       htmxScript.src = 'https://unpkg.com/htmx.org@2.0.7';
@@ -32,6 +34,7 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
 
   // Set innerHTML directly and process htmx
   useLayoutEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (htmxLoaded && containerRef.current && html && (window as any).htmx) {
       const container = containerRef.current;
 
@@ -41,9 +44,11 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
       console.log('AnyApplication: Set innerHTML and processing htmx');
       console.log('Container HTML:', container.innerHTML.substring(0, 200));
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const htmx = (window as any).htmx;
 
       // Add event listener to inject current markup and original prompt into every HTMX request
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const configRequestHandler = (evt: any) => {
         // Only intercept requests to our API endpoint
         if (evt.detail.path === '/api/any-application/interact') {
@@ -83,7 +88,7 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
         container.removeEventListener('htmx:configRequest', configRequestHandler);
       };
     }
-  }, [html, htmxLoaded]);
+  }, [html, htmxLoaded, originalPrompt]);
 
   return (
     <div hx-include="this" className="relative">
