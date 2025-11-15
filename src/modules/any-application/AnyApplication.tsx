@@ -86,7 +86,7 @@ export const AnyApplication = ({ html, originalPrompt }: AnyApplicationProps) =>
   }, [html, htmxLoaded]);
 
   return (
-    <div>
+    <div hx-include="this">
       <div ref={containerRef} />
       <div id="app-error-message" className="text-red-500 p-2"></div>
     </div>

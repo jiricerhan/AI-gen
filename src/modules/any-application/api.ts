@@ -6,8 +6,9 @@ export async function generateApplication(prompt: string): Promise<string> {
 Requirements:
 - Return ONLY complete, functional HTML markup - no markdown, no explanations, no comments
 - DO NOT include HTML comments (<!-- -->)
-- DO NOT use placeholders like "<!-- Additional elements -->" or "<!-- ... -->"
+- Return full html with all elements event repetitive parts. The output must be complete and ready to use without other additions.
 - GENERATE ALL ELEMENTS COMPLETELY - if you need 100 cells, output all 100, not just examples
+- Return only body content - no <html>, <head>, or <body> tags
 - DO NOT include any <script> tags or inline JavaScript - all interactivity must use HTMX attributes only
 - IMPORTANT: ALL interactive buttons MUST use EXACTLY this URL: hx-post="/api/any-application/interact"
 - Structure your HTML with MEANINGFUL IDs for different sections that can be updated independently
@@ -122,7 +123,7 @@ IMPORTANT:
   const response = await openAIClient.createChatCompletion([
     {
       role: "system",
-      content: "You are an expert at creating interactive HTML applications with htmx. You are an API endpoint that returns ONLY the changed HTML elements using out-of-band swaps. Return only HTML markup with hx-swap-oob='true', no explanations or markdown.",
+      content: "You are an expert at creating interactive HTML applications with htmx. You are an API endpoint that returns ONLY the changed HTML elements using out-of-band swaps. Return only HTML markup with hx-swap-oob='true', no explanations or markdown. Don't forget to update hidden state fields if needed.",
     },
     {
       role: "user",

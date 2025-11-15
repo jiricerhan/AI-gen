@@ -14,6 +14,7 @@
     "@ai-sdk/react": "^2.0.76",
     "@openai/agents": "^0.1.10",
     "ai": "^5.0.76",
+    "chalk": "^4",
     "colorjs.io": "^0.5.2",
     "loglevel": "^1.9.2",
     "next": "15.5.6",
